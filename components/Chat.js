@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Chat.module.css";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const Chat = ({ currentUser, supabase, session }) => {
   const [messages, setMessages] = useState([]);
@@ -171,8 +173,16 @@ const Chat = ({ currentUser, supabase, session }) => {
       <div className={styles.container}>
         {messages.map((message) => (
           <div className={styles.messageContainer} key={message.id}>
-            <span className={styles.user}>{username(message.user_id)}</span>
-            <div>{message.content}</div>
+            <span
+              className={
+                message.user_id === currentUser.id ? styles.you : styles.user
+              }
+            >
+              {username(message.user_id)}
+            </span>
+            <ReactMarkdown remarkPlugins={[gfm]} linkTarget={"_blank"}>
+              {message.content}
+            </ReactMarkdown>
           </div>
         ))}
         <form className={styles.chat} onSubmit={sendMessage}>
