@@ -29,6 +29,7 @@ const Auth = ({ supabase }) => {
       {error ? <p className={styles.error}>{error}</p> : null}
 
       {sentEmail ? (
+        // eslint-disable-next-line react/no-unescaped-entities
         <p>We've sent you an email to login! Check your email to continue.</p>
       ) : (
         <>
